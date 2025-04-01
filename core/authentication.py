@@ -11,7 +11,7 @@ from rest_framework.exceptions import AuthenticationFailed
 from core.models import User
 
 PASSAGE_APP_ID = settings.PASSAGE_APP_ID
-PASSAGE_API_KEY = settings.PASSAGE_API_KEY
+PASSAGE_API_KEY = settings.PASSAGE_API_KEY>
 PASSAGE_AUTH_STRATEGY = settings.PASSAGE_AUTH_STRATEGY
 psg = Passage(PASSAGE_APP_ID, PASSAGE_API_KEY, auth_strategy=PASSAGE_AUTH_STRATEGY)
 
