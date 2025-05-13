@@ -1,4 +1,4 @@
-from rest_framework.serializers import ModelSerializer 
+from rest_framework.serializers import ModelSerializer
 
 from core.models import Livro
 
@@ -14,6 +14,7 @@ class LivroRetrieveSerializer(ModelSerializer):
         model = Livro
         fields = "__all__"
         depth = 1
+
 
 class LivroSerializer(ModelSerializer):
     class Meta:
