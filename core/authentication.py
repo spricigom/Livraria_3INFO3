@@ -1,3 +1,4 @@
+
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from drf_spectacular.extensions import OpenApiAuthenticationExtension
@@ -11,9 +12,8 @@ from rest_framework.exceptions import AuthenticationFailed
 from core.models import User
 
 PASSAGE_APP_ID = settings.PASSAGE_APP_ID
-PASSAGE_API_KEY = settings.PASSAGE_API_KEY>
-PASSAGE_AUTH_STRATEGY = settings.PASSAGE_AUTH_STRATEGY
-psg = Passage(PASSAGE_APP_ID, PASSAGE_API_KEY, auth_strategy=PASSAGE_AUTH_STRATEGY)
+PASSAGE_API_KEY = settings.PASSAGE_API_KEY
+psg = Passage(PASSAGE_APP_ID, PASSAGE_API_KEY)
 
 
 class TokenAuthenticationScheme(OpenApiAuthenticationExtension):
@@ -44,7 +44,7 @@ class TokenAuthentication(authentication.BaseAuthentication):
         try:
             user: User = User.objects.get(passage_id=psg_user_id)
         except ObjectDoesNotExist:
-            psg_user = psg.getUser(psg_user_id)
+            psg_user = psg.user.get(psg_user_id)
             user: User = User.objects.create_user(
                 passage_id=psg_user.id,
                 email=psg_user.email,
@@ -54,7 +54,7 @@ class TokenAuthentication(authentication.BaseAuthentication):
 
     def _get_user_id(self, token) -> str:
         try:
-            psg_user_id: str = psg.validateJwt(token)
+            psg_user_id: str = psg.auth.validate_jwt(token)
         except PassageError as e:
             # print(e)
             raise AuthenticationFailed(e.message) from e

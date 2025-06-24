@@ -26,5 +26,9 @@
   //"peacock.color": "#007fff",
   "[python]": {
    "editor.defaultFormatter": "charliermarsh.ruff"
-  }
+  },
+  "color-highlight.languages": [
+    
+    "*"
+  ]
 }
